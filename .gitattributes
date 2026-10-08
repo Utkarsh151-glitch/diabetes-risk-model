@@ -1,0 +1,2 @@
+# Keep the dataset byte-for-byte identical on every OS (its SHA-256 is recorded in data/README.md and models/metrics.json).
+data/*.csv -text

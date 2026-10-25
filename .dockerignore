@@ -1,0 +1,15 @@
+.git
+.github
+.gitignore
+.pytest_cache
+**/__pycache__
+.venv
+venv
+.env
+.env.*
+data
+docs
+tests
+deploy
+requirements-dev.txt
+README.md

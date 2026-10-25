@@ -1,0 +1,14 @@
+# Shared by training (src/train.py) and serving (app/main.py). Exact pins: the saved joblib pipeline
+# only loads reliably with the same scikit-learn / numpy versions it was trained with.
+numpy==2.2.4
+pandas==2.2.3
+scipy==1.15.2
+scikit-learn==1.8.0
+joblib==1.5.1
+# CPU-only build of XGBoost 3.0.0 (same `xgboost` module, without the ~350 MB GPU libraries)
+xgboost-cpu==3.0.0
+matplotlib==3.10.1
+fastapi==0.116.1
+starlette==0.47.3
+pydantic==2.11.7
+uvicorn==0.35.0

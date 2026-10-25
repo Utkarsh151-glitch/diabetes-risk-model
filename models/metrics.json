@@ -1,0 +1,341 @@
+{
+  "model": {
+    "family": "LogisticRegression",
+    "name": "LogReg C=0.1",
+    "params": {
+      "C": 0.1
+    },
+    "missing_indicators": false,
+    "selection_reason": "Logistic regression has the highest mean CV ROC-AUC."
+  },
+  "data": {
+    "file": "data/pima_diabetes.csv",
+    "sha256": "c980e5e01dc1c554a358102b773f34b29599d0051ec5cf5b56ad1c6fcb3a23b0",
+    "rows": 768,
+    "exact_duplicates_dropped": 0,
+    "train_rows": 614,
+    "train_positive": 214,
+    "test_rows": 154,
+    "test_positive": 54,
+    "zero_means_missing": [
+      "Glucose",
+      "BloodPressure",
+      "SkinThickness",
+      "Insulin",
+      "BMI"
+    ],
+    "training_medians_after_zero_to_missing": {
+      "Pregnancies": 3.0,
+      "Glucose": 117.0,
+      "BloodPressure": 72.0,
+      "SkinThickness": 29.0,
+      "Insulin": 125.0,
+      "BMI": 32.4,
+      "DiabetesPedigreeFunction": 0.3825,
+      "Age": 29.0
+    }
+  },
+  "protocol": {
+    "seed": 42,
+    "split": "stratified 80/20, test used once",
+    "cv": "RepeatedStratifiedKFold(n_splits=5, n_repeats=5) ROC-AUC on the training split"
+  },
+  "cv": [
+    {
+      "family": "LogisticRegression",
+      "name": "LogReg C=0.1",
+      "indicator": false,
+      "params": {
+        "C": 0.1
+      },
+      "cv_auc_mean": 0.8428,
+      "cv_auc_std": 0.0307
+    },
+    {
+      "family": "LogisticRegression",
+      "name": "LogReg C=1.0",
+      "indicator": false,
+      "params": {
+        "C": 1.0
+      },
+      "cv_auc_mean": 0.8417,
+      "cv_auc_std": 0.03
+    },
+    {
+      "family": "RandomForest",
+      "name": "RF depth=None leaf=1",
+      "indicator": false,
+      "params": {
+        "n_estimators": 500,
+        "max_depth": null,
+        "min_samples_leaf": 1
+      },
+      "cv_auc_mean": 0.8224,
+      "cv_auc_std": 0.034
+    },
+    {
+      "family": "RandomForest",
+      "name": "RF depth=None leaf=5",
+      "indicator": false,
+      "params": {
+        "n_estimators": 500,
+        "max_depth": null,
+        "min_samples_leaf": 5
+      },
+      "cv_auc_mean": 0.834,
+      "cv_auc_std": 0.0348
+    },
+    {
+      "family": "RandomForest",
+      "name": "RF depth=6 leaf=1",
+      "indicator": false,
+      "params": {
+        "n_estimators": 500,
+        "max_depth": 6,
+        "min_samples_leaf": 1
+      },
+      "cv_auc_mean": 0.8338,
+      "cv_auc_std": 0.0348
+    },
+    {
+      "family": "RandomForest",
+      "name": "RF depth=6 leaf=5",
+      "indicator": false,
+      "params": {
+        "n_estimators": 500,
+        "max_depth": 6,
+        "min_samples_leaf": 5
+      },
+      "cv_auc_mean": 0.835,
+      "cv_auc_std": 0.0359
+    },
+    {
+      "family": "XGBoost",
+      "name": "XGB depth=2 lr=0.05",
+      "indicator": false,
+      "params": {
+        "n_estimators": 200,
+        "max_depth": 2,
+        "learning_rate": 0.05,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8
+      },
+      "cv_auc_mean": 0.8337,
+      "cv_auc_std": 0.032
+    },
+    {
+      "family": "XGBoost",
+      "name": "XGB depth=2 lr=0.1",
+      "indicator": false,
+      "params": {
+        "n_estimators": 200,
+        "max_depth": 2,
+        "learning_rate": 0.1,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8
+      },
+      "cv_auc_mean": 0.8173,
+      "cv_auc_std": 0.0317
+    },
+    {
+      "family": "XGBoost",
+      "name": "XGB depth=3 lr=0.05",
+      "indicator": false,
+      "params": {
+        "n_estimators": 200,
+        "max_depth": 3,
+        "learning_rate": 0.05,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8
+      },
+      "cv_auc_mean": 0.823,
+      "cv_auc_std": 0.0334
+    },
+    {
+      "family": "XGBoost",
+      "name": "XGB depth=3 lr=0.1",
+      "indicator": false,
+      "params": {
+        "n_estimators": 200,
+        "max_depth": 3,
+        "learning_rate": 0.1,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8
+      },
+      "cv_auc_mean": 0.8031,
+      "cv_auc_std": 0.0367
+    },
+    {
+      "family": "LogisticRegression",
+      "name": "LogReg C=0.1 +indicators",
+      "indicator": true,
+      "params": {
+        "C": 0.1
+      },
+      "cv_auc_mean": 0.8378,
+      "cv_auc_std": 0.0356
+    },
+    {
+      "family": "LogisticRegression",
+      "name": "LogReg C=1.0 +indicators",
+      "indicator": true,
+      "params": {
+        "C": 1.0
+      },
+      "cv_auc_mean": 0.8357,
+      "cv_auc_std": 0.0369
+    },
+    {
+      "family": "RandomForest",
+      "name": "RF depth=None leaf=1 +indicators",
+      "indicator": true,
+      "params": {
+        "n_estimators": 500,
+        "max_depth": null,
+        "min_samples_leaf": 1
+      },
+      "cv_auc_mean": 0.8221,
+      "cv_auc_std": 0.0334
+    },
+    {
+      "family": "RandomForest",
+      "name": "RF depth=None leaf=5 +indicators",
+      "indicator": true,
+      "params": {
+        "n_estimators": 500,
+        "max_depth": null,
+        "min_samples_leaf": 5
+      },
+      "cv_auc_mean": 0.8324,
+      "cv_auc_std": 0.0349
+    },
+    {
+      "family": "RandomForest",
+      "name": "RF depth=6 leaf=1 +indicators",
+      "indicator": true,
+      "params": {
+        "n_estimators": 500,
+        "max_depth": 6,
+        "min_samples_leaf": 1
+      },
+      "cv_auc_mean": 0.8329,
+      "cv_auc_std": 0.0345
+    },
+    {
+      "family": "RandomForest",
+      "name": "RF depth=6 leaf=5 +indicators",
+      "indicator": true,
+      "params": {
+        "n_estimators": 500,
+        "max_depth": 6,
+        "min_samples_leaf": 5
+      },
+      "cv_auc_mean": 0.8346,
+      "cv_auc_std": 0.0343
+    },
+    {
+      "family": "XGBoost",
+      "name": "XGB depth=2 lr=0.05 +indicators",
+      "indicator": true,
+      "params": {
+        "n_estimators": 200,
+        "max_depth": 2,
+        "learning_rate": 0.05,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8
+      },
+      "cv_auc_mean": 0.8326,
+      "cv_auc_std": 0.0312
+    },
+    {
+      "family": "XGBoost",
+      "name": "XGB depth=2 lr=0.1 +indicators",
+      "indicator": true,
+      "params": {
+        "n_estimators": 200,
+        "max_depth": 2,
+        "learning_rate": 0.1,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8
+      },
+      "cv_auc_mean": 0.8164,
+      "cv_auc_std": 0.0324
+    },
+    {
+      "family": "XGBoost",
+      "name": "XGB depth=3 lr=0.05 +indicators",
+      "indicator": true,
+      "params": {
+        "n_estimators": 200,
+        "max_depth": 3,
+        "learning_rate": 0.05,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8
+      },
+      "cv_auc_mean": 0.8237,
+      "cv_auc_std": 0.0322
+    },
+    {
+      "family": "XGBoost",
+      "name": "XGB depth=3 lr=0.1 +indicators",
+      "indicator": true,
+      "params": {
+        "n_estimators": 200,
+        "max_depth": 3,
+        "learning_rate": 0.1,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8
+      },
+      "cv_auc_mean": 0.8055,
+      "cv_auc_std": 0.0319
+    }
+  ],
+  "threshold": {
+    "value": 0.3491,
+    "rule": "Maximises Youden's J (sensitivity + specificity - 1) on out-of-fold predictions for the training split (mean over the 5 repeats); the test set is not used.",
+    "out_of_fold": {
+      "sensitivity": 0.729,
+      "specificity": 0.7825
+    }
+  },
+  "test": {
+    "roc_auc": 0.8104,
+    "roc_auc_ci95": [
+      0.7362,
+      0.8718
+    ],
+    "pr_auc": 0.666,
+    "accuracy": 0.7208,
+    "precision": 0.5846,
+    "recall": 0.7037,
+    "f1": 0.6387,
+    "brier": 0.1737,
+    "confusion_matrix": {
+      "tn": 73,
+      "fp": 27,
+      "fn": 16,
+      "tp": 38
+    },
+    "positive_rate": 0.3506,
+    "bootstrap_resamples": 1000
+  },
+  "feature_importance": {
+    "Pregnancies": 0.322,
+    "Glucose": 1.019,
+    "BloodPressure": -0.0041,
+    "SkinThickness": 0.0673,
+    "Insulin": -0.0033,
+    "BMI": 0.5799,
+    "DiabetesPedigreeFunction": 0.2103,
+    "Age": 0.1576
+  },
+  "versions": {
+    "python": "3.11.0",
+    "scikit-learn": "1.8.0",
+    "xgboost": "3.0.0",
+    "numpy": "2.2.4",
+    "pandas": "2.2.3",
+    "joblib": "1.5.1"
+  },
+  "trained_on": "2026-10-08"
+}

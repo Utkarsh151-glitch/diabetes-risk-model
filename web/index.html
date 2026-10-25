@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diabetes Risk Model</title>
+  <meta name="description" content="Estimate diabetes risk with a logistic regression model trained on the Pima Indians Diabetes Database, evaluated without data leakage.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js"></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <header class="intro">
+      <p class="eyebrow">Machine learning demo</p>
+      <h1>Diabetes risk estimate</h1>
+      <p class="lede">A logistic regression model trained on the Pima Indians Diabetes Database. Enter the measurements below to get a probability and whether it is above the screening threshold.</p>
+      <p class="model-line" id="model-line">Loading model details…</p>
+    </header>
+
+    <aside class="notice" aria-label="Who this model is for">
+      <strong>Who the model was trained on:</strong> <span id="population">768 women aged 21 or older of Pima Indian heritage, living near Phoenix, Arizona.</span> Estimates for anyone else (including men) are untested.
+    </aside>
+
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+
+    <form id="risk-form" novalidate>
+      <fieldset>
+        <legend>Required</legend>
+        <div class="grid">
+          <div class="field">
+            <label for="Pregnancies">Pregnancies <span class="unit">count</span></label>
+            <input id="Pregnancies" name="Pregnancies" type="number" inputmode="numeric" min="0" max="20" step="1" required aria-describedby="Pregnancies-help Pregnancies-error">
+            <p class="help" id="Pregnancies-help">Number of times pregnant. 0 to 20.</p>
+            <p class="error" id="Pregnancies-error"></p>
+          </div>
+          <div class="field">
+            <label for="Glucose">Glucose <span class="unit">mg/dL</span></label>
+            <input id="Glucose" name="Glucose" type="number" inputmode="decimal" min="40" max="300" step="any" required aria-describedby="Glucose-help Glucose-error">
+            <p class="help" id="Glucose-help">Plasma glucose 2 hours into an oral glucose tolerance test (not fasting). 40 to 300.</p>
+            <p class="error" id="Glucose-error"></p>
+          </div>
+          <div class="field">
+            <label for="BloodPressure">Blood pressure <span class="unit">mmHg</span></label>
+            <input id="BloodPressure" name="BloodPressure" type="number" inputmode="decimal" min="30" max="140" step="any" required aria-describedby="BloodPressure-help BloodPressure-error">
+            <p class="help" id="BloodPressure-help">Diastolic (the lower number). 30 to 140.</p>
+            <p class="error" id="BloodPressure-error"></p>
+          </div>
+          <div class="field">
+            <label for="BMI">BMI <span class="unit">kg/m²</span></label>
+            <input id="BMI" name="BMI" type="number" inputmode="decimal" min="10" max="70" step="any" required aria-describedby="BMI-help BMI-error">
+            <p class="help" id="BMI-help">Body mass index: weight in kg divided by height in m squared. 10 to 70.</p>
+            <p class="error" id="BMI-error"></p>
+          </div>
+          <div class="field">
+            <label for="Age">Age <span class="unit">years</span></label>
+            <input id="Age" name="Age" type="number" inputmode="numeric" min="21" max="100" step="1" required aria-describedby="Age-help Age-error">
+            <p class="help" id="Age-help">21 to 100 (the training data starts at 21).</p>
+            <p class="error" id="Age-error"></p>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Optional <span class="legend-note">leave blank if unknown: the training median is used</span></legend>
+        <div class="grid">
+          <div class="field">
+            <label for="SkinThickness">Skin thickness <span class="unit">mm</span> <span class="opt">optional</span></label>
+            <input id="SkinThickness" name="SkinThickness" type="number" inputmode="decimal" min="5" max="100" step="any" aria-describedby="SkinThickness-help SkinThickness-error">
+            <p class="help" id="SkinThickness-help">Triceps skinfold thickness. 5 to 100.</p>
+            <p class="error" id="SkinThickness-error"></p>
+          </div>
+          <div class="field">
+            <label for="Insulin">Insulin <span class="unit">µU/mL</span> <span class="opt">optional</span></label>
+            <input id="Insulin" name="Insulin" type="number" inputmode="decimal" min="10" max="900" step="any" aria-describedby="Insulin-help Insulin-error">
+            <p class="help" id="Insulin-help">2-hour serum insulin. 10 to 900.</p>
+            <p class="error" id="Insulin-error"></p>
+          </div>
+          <div class="field">
+            <label for="DiabetesPedigreeFunction">Diabetes pedigree function <span class="unit">score</span> <span class="opt">optional</span></label>
+            <input id="DiabetesPedigreeFunction" name="DiabetesPedigreeFunction" type="number" inputmode="decimal" min="0.05" max="2.5" step="any" aria-describedby="DiabetesPedigreeFunction-help DiabetesPedigreeFunction-error">
+            <p class="help" id="DiabetesPedigreeFunction-help">A family-history score from the original study. 0.05 to 2.5.</p>
+            <p class="error" id="DiabetesPedigreeFunction-error"></p>
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="actions">
+        <button type="submit" id="submit">Estimate risk</button>
+        <button type="button" class="secondary" id="example">Fill an example</button>
+      </div>
+    </form>
+
+    <section class="result" id="result" hidden aria-labelledby="result-title">
+      <h2 id="result-title">Result</h2>
+      <p class="prob"><span id="prob-value">–</span> <span class="prob-label">estimated probability of diabetes</span></p>
+      <div class="meter" aria-hidden="true">
+        <div class="meter-fill" id="meter-fill"></div>
+        <div class="meter-threshold" id="meter-threshold"></div>
+      </div>
+      <p class="verdict" id="verdict"></p>
+      <p class="imputed" id="imputed"></p>
+    </section>
+
+    <p class="disclaimer"><strong>Not medical advice. Talk to a doctor.</strong> This page gives a statistical estimate from a model trained on 768 people; it cannot diagnose diabetes. Values you enter are sent to the model API to compute the estimate and are not stored or logged.</p>
+
+    <footer class="foot">
+      <a href="https://github.com/Utkarsh151-glitch/diabetes-risk-model">Code, data and evaluation on GitHub</a>
+      <span aria-hidden="true">·</span>
+      <a href="model-info" id="api-link">Model info (JSON)</a>
+    </footer>
+  </main>
+</body>
+</html>
